@@ -16,6 +16,9 @@
 #company
 company-statistics-cache.el
 
+#emacs
+.#recentf
+
 /url/cache
 /.emacs.desktop
 /auto-save-list

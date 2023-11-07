@@ -60,8 +60,75 @@
     (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
 
 (add-hook 'org-mode-hook 'org-indent-mode )
+(add-hook 'org-mode-hook 'visual-line-mode )
+
 (setq org-latex-caption-above nil)
-(setq org-latex-toc-command "\\tableofcontents \\clearpage")
+(setq org-latex-toc-command "\\thispagestyle{fancy} \\tableofcontents")
+
+(setq org-latex-pdf-process
+      '("latexmk -pdflatex='pdflatex -interaction nonstopmode' -pdf -bibtex -f %f"))
+
+
+
+(unless (boundp 'org-latex-classes)
+  (setq org-latex-classes nil))
+(add-to-list 'org-latex-classes
+             '("informe-laruex"
+               "\\documentclass[11pt,a4paper]{article}
+\\usepackage[utf8]{inputenc}
+\\usepackage[T1]{fontenc}
+\\usepackage{palatino}
+\\usepackage{fixltx2e}
+\\usepackage{graphicx}
+\\usepackage{longtable}
+\\usepackage{float}
+\\usepackage{wrapfig}
+\\usepackage{rotating}
+\\usepackage[normalem]{ulem}
+\\usepackage{amsmath}
+\\usepackage{textcomp}
+\\usepackage{marvosym}
+\\usepackage{wasysym}
+\\usepackage{amssymb}
+\\usepackage{hyperref}
+\\usepackage{mathpazo}
+\\usepackage{color}
+\\usepackage{enumerate}
+\\definecolor{bg}{rgb}{0.95,0.95,0.95}
+\\tolerance=1000
+      [NO-DEFAULT-PACKAGES]
+      [PACKAGES]
+      [EXTRA]
+\\linespread{1.1}
+\\usepackage{a4wide}
+\\usepackage{makecell}
+\\usepackage{fancyhdr}
+\\setlength{\\headheight}{64pt}
+\\pagestyle{fancy}
+\\fancyhf{}
+\\fancyhead[L]{
+  \\mbox{\\makecell[cl]{\\includegraphics[scale=0.08]{/home/flakito/LARUEX/Logos/laruex_logo.png}}}}
+
+\\fancyhead[R]{
+  \\mbox{\\makecell[r]{{\\sc Laboratorio de Radiactividad}
+      \\\\{\\sc de la Universidad de Extremadura}
+      \\\\{\\small Avda. de la Universidad s/n}
+      \\\\{\\small 10004 Cáceres}
+      \\\\{\\small Tel: +34 927 257 153}
+      \\\\{\\small e-mail: laruex@unex.es}
+    }}}
+
+\\renewcommand{\\headrulewidth}{1pt}
+\\usepackage{lastpage}
+\\lfoot{{\\small Pedro Monroy}}
+\\cfoot{{\\small Estado de la Red SPIDA}}
+\\rfoot{\\thepage\\ of \\pageref{LastPage}}
+
+\\hypersetup{pdfborder=0 0 0}"
+               ("\\section{%s}" . "\\section*{%s}")
+               ("\\subsection{%s}" . "\\subsection*{%s}")
+               ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+               ("\\paragraph{%s}" . "\\paragraph*{%s}")))
 ;; AUCTEX
 ;; LATEX
 (use-package tex
@@ -224,8 +291,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Scratch buffer
-(setq inhibit-startup-message t)
-;;      initial-major-mode 'org-mode)
+;; (setq inhibit-startup-message t)
+;;       initial-major-mode 'org-mode)
 
 ;; Definimos un archivo de configuracion para las modificaciones de emacs
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
